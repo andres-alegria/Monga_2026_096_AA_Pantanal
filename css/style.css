@@ -1,0 +1,469 @@
+/* ============================================================
+   Pantanal flood pulse × fire × bioacoustics — Mongabay style
+   Layout and type follow Andrés's Illustrator redesign
+   (2026_096_AA_Pantanal_v1.ai, 28 Oct), scaled from its
+   1350 pt canvas to the page. Tokens first — adjust here.
+   ============================================================ */
+
+:root {
+  /* Mongabay Design System tokens — adjust here */
+  --pine: #092f29;         /* pine-green */
+  --emerald: #006a54;      /* emerald-green */
+  --charcoal: #181818;
+  --gray-mid: #d9d9d9;     /* medium-gray / border */
+  --offwhite: #eef0f0;     /* off-white (pills ground) */
+  --white: #fcfcfc;
+  --surface: #ffffff;      /* finished graphics sit on white, like the article page */
+  --chart-panel: #fafafa;  /* chart + note panels */
+  --hairline: #0f362e14;   /* line */
+  --ink: #092f29;          /* text on light = pine */
+  --tone-light: #738b87;   /* ink-muted: decks, captions, axis labels */
+  --ink-subtle: #92a3a0;   /* source lines, panel divider */
+
+  /* Data + map tokens — adjust here */
+  --flood-teal: #8fd0cd;   /* bars + flood legend, matches the video's water */
+  --flood-deep: #74aab1;   /* highlighted 2011 bar + its leader */
+  --fire-red: #a01313;     /* 2020 bar, fire legend, red annotation */
+  --flood-light: #bee1e5;  /* sky-blue: rainy-season band */
+  --chart-grid: #788986;
+  --tiger-orange: #e8a643;      /* GBIF dots + record pill background — adjust here */
+  --tiger-orange-tone: #80482b; /* record pill text (brown) — adjust here */
+
+  /* Typography — adjust font stacks and base size here */
+  --font-serif: "Rowan", Georgia, serif;
+  --font-sans: "Public Sans", Helvetica, Arial, sans-serif;
+  --text-base: 16px;
+
+  /* Layout — adjust page width and rhythm here */
+  --maxw: 1060px;
+  --gap: 28px;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: var(--text-base); }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--surface);   /* white, matching the article page — adjust here */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------------- figures (stand-alone cards) ---------------- */
+
+section { padding: 24px 0; }
+section:first-of-type { padding-top: 32px; }
+section:last-of-type { padding-bottom: 48px; }
+
+/* figures flow on the white page; a hairline separates them in the compiled view */
+body:not(.solo) section + section { border-top: 1px solid var(--hairline); }
+
+.card { padding: 6px 0 0; }
+
+.fig-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.fig-head h2 { margin-bottom: 0; }
+
+/* lizard mark: 0.8 × the title size, as in the static graphics */
+.fig-logo {
+  flex: none;
+  width: clamp(1.3rem, 3vw, 2.05rem);   /* adjust mark size here */
+  height: auto;
+  margin-top: 0.3rem;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.85vw, 2.56rem);
+  line-height: 1.2;
+  color: var(--pine);
+}
+
+.section-body p {
+  margin-bottom: 14px;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 2.35vw, 1.55rem);
+  line-height: 1.3;
+  color: var(--tone-light);   /* ink-muted deck — adjust here */
+  max-width: 64ch;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1.06fr 1fr;   /* map | text, as in the v1 artboards — adjust here */
+  gap: clamp(20px, 3vw, 34px);
+  align-items: start;
+  margin-top: 22px;
+}
+
+.map-title {
+  font-size: clamp(0.95rem, 1.7vw, 1.14rem);
+  font-weight: 500;
+  color: var(--pine);
+  margin-bottom: 10px;
+}
+.map-title-period { display: block; }
+
+/* ---------------- video + overlays ---------------- */
+
+.map-frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  container-type: inline-size;   /* lets the date chip scale with the video */
+}
+.map-frame video, .map-frame img.still { width: 100%; display: block; }
+
+/* white annotation over the map's top-left corner (replaces the caption);
+   the soft shadow keeps it readable while the flood animates beneath */
+.map-overlay {
+  position: absolute;
+  top: 14px; left: 16px;
+  color: #fff;
+  font-size: clamp(0.78rem, 1.5vw, 0.98rem);
+  line-height: 1.32;
+  max-width: 21ch;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* callouts over the flood map */
+.callout {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.callout.visible { opacity: 1; }
+.callout .dot {
+  position: absolute;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.callout .line {
+  position: absolute;
+  height: 2px;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  transform-origin: left center;
+}
+.callout .box {
+  position: absolute;
+  width: min(22ch, 44vw);
+  background: rgba(252, 252, 252, 0.95);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: clamp(0.78rem, 1.55vw, 1rem);
+  line-height: 1.32;
+  color: var(--ink);
+}
+.callout .box b { font-weight: 500; }
+
+/* date chip (2020 map) — sized in container units so it always
+   covers the burned-in label corner, whatever the video width */
+.date-chip {
+  position: absolute;
+  right: 12px; bottom: 12px;
+  padding: 10px 18px;
+  background: var(--offwhite);   /* rounded pill, like the Fig 3 labels — adjust here */
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(0.72rem, 3.4cqw, 0.95rem);
+  font-weight: 500;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+/* fire canvas sits over the basemap image; label overlay above the fire */
+.map-frame img.map-base { width: 100%; display: block; }
+#fireCanvas,
+.map-frame img.map-furniture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* river label on the Fig 1 animation — position/rotation adjust here */
+.river-label {
+  position: absolute;
+  left: 30%;
+  top: 82%;
+  transform: translate(-50%, -50%) rotate(-86deg);
+  color: var(--white);
+  font-style: italic;
+  font-size: clamp(0.6rem, 1.9cqw, 0.82rem);
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* transport row: play button + dial / slider */
+.transport {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.playbtn {
+  flex: none;
+  width: 38px; height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--pine);         /* control color — adjust here */
+  color: var(--white);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.playbtn svg { width: 15px; height: 15px; fill: currentColor; }
+
+/* month dial (fig 1 right column) */
+.month-dial { flex: 1; }
+.month-row { display: flex; }
+.month-cell {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 1.5vw, 0.98rem);
+  font-weight: 400;
+  color: var(--tone-light);
+  padding: 7px 0 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  position: relative;
+}
+.month-cell.active {
+  background: var(--pine);
+  color: var(--white);
+  font-weight: 500;
+}
+.season-band { position: relative; height: 5px; margin-top: 4px; }
+.season-band .seg {
+  position: absolute;
+  top: 0; height: 100%;
+  background: var(--flood-light);   /* rainy-season band color — adjust here */
+  border-radius: 2.5px;
+}
+.season-label {
+  font-size: clamp(0.72rem, 1.5vw, 0.98rem);
+  color: var(--tone-light);
+  margin-top: 8px;
+}
+
+/* hover states only where a real pointer exists */
+@media (hover: hover) and (pointer: fine) {
+  .playbtn:hover { background: var(--emerald); }
+  .month-cell:not(.active):hover { background: var(--offwhite); }
+}
+
+/* 2020 slider */
+input[type="range"].timeline {
+  flex: 1;
+  align-self: center;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gray-mid);
+  outline: none;
+}
+input[type="range"].timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--pine);
+  border: 2.5px solid var(--white);
+  box-shadow: 0 0 0 1px var(--gray-mid);
+  cursor: pointer;
+}
+input[type="range"].timeline::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--pine);
+  border: 2.5px solid var(--white);
+  box-shadow: 0 0 0 1px var(--gray-mid);
+  cursor: pointer;
+}
+
+.map-caption {
+  font-size: 0.98rem;
+  color: var(--tone-light);
+  line-height: 1.4;
+  margin-top: 26px;
+}
+
+/* legend (fig 2 right column) */
+.legend { display: flex; gap: 26px; margin: 14px 0 20px; flex-wrap: wrap; }
+.legend .item { display: flex; align-items: center; gap: 10px; font-size: 0.98rem; color: var(--ink); }
+.legend .sw { width: 20px; height: 20px; border-radius: 4px; }
+.legend .sw.flood { background: var(--flood-teal); }
+.legend .sw.fire { background: var(--fire-red); }
+
+/* ---------------- fig 1: cycle panel + stats ---------------- */
+
+.cycle-panel {
+  background: var(--chart-panel);   /* note panel ground — adjust here */
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-top: 26px;
+}
+.panel-lead {
+  font-size: 1.14rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.panel-body {
+  font-size: 1.14rem;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  margin-top: 20px;
+}
+.stat-col { display: flex; flex-direction: column; gap: 16px; padding-right: 10px; }
+.stat-col.right {
+  border-left: 1px solid var(--ink-subtle);   /* divider — adjust here */
+  padding: 0 0 0 20px;
+}
+.stat { display: flex; gap: 10px; align-items: flex-start; }
+.stat.tall { flex-direction: column; gap: 6px; }
+.stat-num {
+  font-family: var(--font-serif);   /* serif stat numbers — adjust here */
+  font-size: 1.55rem;   /* big stat numbers — adjust here */
+  line-height: 1.1;
+  color: var(--ink);
+}
+.stat-label {
+  font-size: 0.92rem;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-top: 3px;
+}
+.stat.tall .stat-label { padding-top: 0; }
+
+/* locator globe under the panel, label beside it */
+.globe-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+.globe-row img { width: 124px; flex: none; }   /* globe size — adjust here */
+.globe-row figcaption {
+  font-size: 0.74rem;
+  color: var(--tone-light);
+  line-height: 1.45;
+  max-width: 24ch;
+}
+
+/* ---------------- fig 2: bar chart ---------------- */
+
+.chart-block {
+  background: var(--chart-panel);   /* charts sit on a chart-panel — adjust here */
+  border-radius: 12px;
+  padding: 18px 20px 12px;
+}
+.chart-title {
+  font-size: 1.14rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.chart-unit { font-size: 0.98rem; color: var(--tone-light); margin-bottom: 10px; }
+#floodChart { width: 100%; height: auto; display: block; }
+#floodChart text { font-family: var(--font-sans); }
+
+/* ---------------- fig 3: GBIF multiples + pills ---------------- */
+
+.gbif-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.gbif-grid figure { margin: 0; }
+.gbif-grid img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+.pill-row { display: flex; gap: 8px; margin-top: 12px; }
+.pill {
+  border-radius: 999px;
+  font-size: 0.98rem;
+  line-height: 1;
+  padding: 12px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+.pill-light { background: var(--offwhite); color: var(--ink); flex: 0 0 43%; }
+.pill-dark { background: var(--tiger-orange); color: var(--tiger-orange-tone); flex: 1; }
+
+#figure-3 .map-title { margin-top: 20px; }
+#figure-3 .map-caption { max-width: none; }
+
+/* ---------------- per-figure source line ---------------- */
+
+.fig-sources {
+  margin-top: 24px;
+  font-size: 0.82rem;        /* a credit, not fine print */
+  color: var(--ink-subtle);
+  line-height: 1.5;
+}
+
+/* ---------------- print (for the Illustrator snapshot) ---------------- */
+
+/* pdf snapshot mode keeps the desktop layout whatever the print engine's
+   layout width, so columns match the live page */
+body.pdf .two-col { grid-template-columns: 1.06fr 1fr; }
+body.pdf .callout .box { width: min(22ch, 260px); }
+
+@media print {
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .playbtn, input.timeline { display: none; }  /* UI controls, not design content */
+  .card, .map-frame, .chart-block { break-inside: avoid; }
+  body:not(.solo) section + section { border-top: none; }
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .stat-col { padding-right: 0; }
+  .stat-col.right {
+    border-left: none;
+    border-top: 1px solid var(--ink-subtle);
+    padding: 16px 0 0;
+    margin-top: 16px;
+  }
+  /* GBIF maps stay three-across so the comparison reads at a glance */
+  .gbif-grid { gap: 8px; }
+  .pill-row { flex-direction: column; gap: 6px; }
+  .pill { font-size: 0.72rem; padding: 8px 6px; }
+  .pill-light { flex: none; }
+}

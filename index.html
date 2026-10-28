@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pantanal figures (2026_096)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Rowan:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="assets/pdf_flood_july.jpg">
+<link rel="preload" as="image" href="assets/pdf_fire_sep.jpg">
+</head>
+<body>
+
+<!-- ============ Figure 1 — The dry and wet season dynamics in the Pantanal ============ -->
+<section id="figure-1">
+  <div class="wrap">
+    <div class="card">
+      <div class="fig-head">
+        <h2 id="pulseHeading"></h2>
+        <img class="fig-logo" src="assets/mongabay-logomark.svg" alt="Mongabay" width="40" height="40">
+      </div>
+      <div class="section-body" id="pulseBody"></div>
+      <div class="two-col">
+        <div>
+          <div class="map-frame" id="pulseFrame">
+            <video id="pulseVideo" src="assets/flood_monthly.mp4" poster="assets/flood_poster.jpg"
+                   muted playsinline loop preload="auto"></video>
+            <p class="map-overlay" id="pulseOverlay"></p>
+            <span class="river-label">Paraguay River</span>
+            <!-- callouts injected here -->
+          </div>
+        </div>
+        <div>
+          <p class="map-title"><span id="pulseMapTitle"></span><span class="map-title-period" id="pulseMapPeriod"></span></p>
+          <div class="transport">
+            <button class="playbtn" id="pulsePlay" aria-label="Play or pause the monthly flood animation"></button>
+            <div class="month-dial">
+              <div class="month-row" id="monthRow"></div>
+              <div class="season-band" id="seasonBand"></div>
+              <div class="season-label" id="seasonLabel"></div>
+            </div>
+          </div>
+          <div class="cycle-panel">
+            <p class="panel-lead" id="pulseCycleLead"></p>
+            <p class="panel-body" id="pulseCycleNote"></p>
+            <div class="stat-grid" id="pulseStats"></div>
+          </div>
+          <figure class="globe-row">
+            <img src="assets/locator_globe.svg" alt="Globe centred on South America with the Pantanal marked in red">
+            <figcaption id="pulseGlobeCaption"></figcaption>
+          </figure>
+        </div>
+      </div>
+      <p class="fig-sources" id="fig1Sources"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Figure 2 — In 2020 the water stayed away, and fire moved in ============ -->
+<section id="figure-2">
+  <div class="wrap">
+    <div class="card">
+      <div class="fig-head">
+        <h2 id="fireHeading"></h2>
+        <img class="fig-logo" src="assets/mongabay-logomark.svg" alt="Mongabay" width="40" height="40">
+      </div>
+      <div class="section-body" id="fireBody"></div>
+      <div class="two-col">
+        <div>
+          <div class="map-frame">
+            <img class="map-base" src="assets/fig2_basemap_photo.jpg"
+                 alt="Satellite map of the Pantanal, teal ecoregion area with 2020 fire detections in red">
+            <canvas id="fireCanvas" width="1320" height="1520" aria-hidden="true"></canvas>
+            <img class="map-furniture" src="assets/fig2_overlay.svg" alt="" aria-hidden="true">
+            <div class="date-chip" id="dateChip">Dec. 31, 2020</div>
+          </div>
+          <div class="transport">
+            <button class="playbtn" id="firePlay" aria-label="Play or pause the 2020 flood and fire animation"></button>
+            <input type="range" class="timeline" id="fireSlider" min="0" max="1000" value="0"
+                   aria-label="Scrub through 2020">
+          </div>
+        </div>
+        <div>
+          <p class="map-title" id="fireMapTitle"></p>
+          <div class="legend" id="fireLegend"></div>
+          <div class="chart-block">
+            <p class="chart-title" id="chartTitle"></p>
+            <p class="chart-unit" id="chartUnit"></p>
+            <svg id="floodChart" viewBox="0 0 560 450" role="img"
+                 aria-label="Bar chart of annual flooded area in the Pantanal, 2000 to 2020"></svg>
+          </div>
+        </div>
+      </div>
+      <p class="fig-sources" id="fig2Sources"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Figure 3 — Why scientists are wiring the wetland for sound ============ -->
+<section id="figure-3">
+  <div class="wrap">
+    <div class="card">
+      <div class="fig-head">
+        <h2 id="listenHeading"></h2>
+        <img class="fig-logo" src="assets/mongabay-logomark.svg" alt="Mongabay" width="40" height="40">
+      </div>
+      <div class="section-body" id="listenBody"></div>
+      <p class="map-title" id="gbifTitle"></p>
+      <div class="gbif-grid" id="gbifGrid"></div>
+      <p class="map-caption" id="gbifCaption"></p>
+      <p class="fig-sources" id="fig3Sources"></p>
+    </div>
+  </div>
+</section>
+
+<script src="js/content.js"></script>
+<script src="assets/fire_days.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
