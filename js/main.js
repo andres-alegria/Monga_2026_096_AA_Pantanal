@@ -33,8 +33,17 @@
     const soloWrap = sec.querySelector(".wrap");
     const DESIGN_W = 1060;
     const fitScale = () => {
-      const s = Math.min(1, document.documentElement.clientWidth / DESIGN_W);
+      const cw = document.documentElement.clientWidth;
+      const sW = Math.min(1, cw / DESIGN_W);
+      /* never exceed the frame: if anything (e.g. a browser's font
+         inflation) makes the wrap taller than measured, shrink to fit
+         the frame height rather than letting the bottom clip */
+      const ch = window.innerHeight;
+      const sH = ch > 0 && soloWrap.offsetHeight > 0
+        ? ch / soloWrap.offsetHeight : sW;
+      const s = Math.min(sW, sH);
       soloWrap.style.transform = s < 1 ? `scale(${s})` : "";
+      soloWrap.style.marginLeft = s < sW ? (cw - DESIGN_W * s) / 2 + "px" : "";
       sec.style.height = s < 1 ? soloWrap.offsetHeight * s + "px" : "";
     };
     new ResizeObserver(fitScale).observe(soloWrap);

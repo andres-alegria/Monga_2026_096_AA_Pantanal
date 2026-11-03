@@ -12,7 +12,6 @@ import json
 DOMAIN = "https://monga2026096aapantanal.vercel.app"
 DESIGN_W = 1060
 PAD = 6      # rounding + late-font allowance; spare px sit as a hairline gap
-COL = "min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))"
 
 TITLES = {
     1: "Dry and wet season dynamics in the Pantanal",
@@ -26,9 +25,10 @@ def main():
     out = []
     for fig in (1, 2, 3):
         h = heights[f"fig{fig}"]
-        slope = (h + PAD) / DESIGN_W
-        style = (f"display:block; width:100%; border:0; "
-                 f"height:calc({slope:.4f} * ({COL}));")
+        # the scaled embed is strictly proportional, so the frame can size
+        # itself from its own real width — no column-width assumption
+        style = (f"display:block; width:100%; height:auto; "
+                 f"aspect-ratio:{DESIGN_W}/{h + PAD}; border:0;")
         out.append(
             f"Figure {fig}  (design {DESIGN_W}x{h}px, scaled to the column):\n"
             f'[iframe src="{DOMAIN}/?fig={fig}" '

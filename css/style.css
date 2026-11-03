@@ -42,7 +42,13 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: var(--text-base); }
+html {
+  font-size: var(--text-base);
+  /* stop iOS Safari inflating text in the scaled embed (a 1060px layout
+     in a phone-width frame triggers its desktop-site font boosting) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   font-family: var(--font-sans);
