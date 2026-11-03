@@ -20,6 +20,11 @@
     document.querySelectorAll("section").forEach((s) => {
       if (s.id !== "figure-" + solo) s.style.display = "none";
     });
+    /* solo = embed: stretch to the iframe so the height formula's spare
+       pixels become block spacing instead of a white gap under the figure.
+       Always on — WordPress mangles & in shortcode attributes, so the embed
+       URL must work with the single ?fig param (no &fill). */
+    document.body.classList.add("fill");
   }
 
   const fillParas = (el, paras) => {

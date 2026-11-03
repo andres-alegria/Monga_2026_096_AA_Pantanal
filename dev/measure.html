@@ -1,0 +1,58 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>embed height measurement</title>
+<style>
+  body { margin: 0; font: 12px monospace; }
+  #frame { border: 0; display: block; height: 10px; }
+  pre { padding: 8px; white-space: pre-wrap; }
+</style>
+<iframe id="frame" src="about:blank"></iframe>
+<pre id="out">measuring…</pre>
+<script>
+/* Measures each solo figure's document height across frame widths in ONE
+   iframe, resized synchronously (same-origin). Results land in #out as JSON
+   and on window.RESULTS. */
+/* Mongabay's article column tops out at 780px, so measure 320..780 (the
+   embed is always the stacked layout — see the solo.fill media rule) */
+const WIDTHS = [];
+for (let w = 320; w <= 776; w += 8) WIDTHS.push(w);
+WIDTHS.push(780);
+
+const frame = document.getElementById("frame");
+const out = document.getElementById("out");
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function ready(doc) {
+  await doc.fonts.ready.catch(() => {});
+  const t0 = Date.now();
+  while (Date.now() - t0 < 8000) {
+    const imgsOk = [...doc.images].every((i) => i.complete);
+    const vidsOk = [...doc.querySelectorAll("video")].every((v) => v.readyState >= 1);
+    if (imgsOk && vidsOk) break;
+    await sleep(120);
+  }
+  await sleep(250);
+}
+
+async function measureFig(fig) {
+  frame.style.width = "900px";
+  frame.src = "/?fig=" + fig + "&fill=1";
+  await new Promise((r) => (frame.onload = r));
+  const doc = frame.contentDocument;
+  await ready(doc);
+  const rows = [];
+  for (const w of WIDTHS) {
+    frame.style.width = w + "px";
+    void doc.documentElement.offsetHeight;        // force synchronous layout
+    rows.push([w, doc.documentElement.scrollHeight]);
+  }
+  return rows;
+}
+
+(async () => {
+  const res = {};
+  for (const fig of [1, 2, 3]) res["fig" + fig] = await measureFig(fig);
+  window.RESULTS = res;
+  out.textContent = JSON.stringify(res);
+})();
+</script>
