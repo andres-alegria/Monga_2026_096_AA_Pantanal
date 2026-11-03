@@ -1,8 +1,8 @@
-Figure 1  (slack 0..114px across 320-780, absorbed by fill):
-[iframe src="https://REPLACE-ME.vercel.app/?fig=1" title="Pantanal figure 1" loading="lazy" scrolling="auto" style="display:block; width:100%; border:0; height:calc(max((2236.5px + -1.9375 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px)))), (1189.7px + 0.7854 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))))));"][/iframe]
+Figure 1  (design 1060x850px, scaled to the column):
+[iframe src="https://monga2026096aapantanal.vercel.app/?fig=1" title="Dry and wet season dynamics in the Pantanal" loading="lazy" scrolling="no" style="display:block; width:100%; border:0; height:calc(0.8075 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))));"][/iframe]
 
-Figure 2  (slack 0..115px across 320-780, absorbed by fill):
-[iframe src="https://REPLACE-ME.vercel.app/?fig=2" title="Pantanal figure 2" loading="lazy" scrolling="auto" style="display:block; width:100%; border:0; height:calc(max((1646.5px + -1.1875 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px)))), (729.1px + 1.5676 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))))));"][/iframe]
+Figure 2  (design 1060x885px, scaled to the column):
+[iframe src="https://monga2026096aapantanal.vercel.app/?fig=2" title="In 2020 the water stayed away, and fire moved in" loading="lazy" scrolling="no" style="display:block; width:100%; border:0; height:calc(0.8406 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))));"][/iframe]
 
-Figure 3  (slack 0..105px across 320-780, absorbed by fill):
-[iframe src="https://REPLACE-ME.vercel.app/?fig=3" title="Pantanal figure 3" loading="lazy" scrolling="auto" style="display:block; width:100%; border:0; height:calc(max((1021.2px + -0.5720 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px)))), (513.5px + 0.2653 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))))));"][/iframe]
+Figure 3  (design 1060x705px, scaled to the column):
+[iframe src="https://monga2026096aapantanal.vercel.app/?fig=3" title="Why scientists are wiring the wetland for sound" loading="lazy" scrolling="no" style="display:block; width:100%; border:0; height:calc(0.6708 * (min(780px, 100vw - 2*clamp(20px, 1px + 5vw, 40px))));"][/iframe]

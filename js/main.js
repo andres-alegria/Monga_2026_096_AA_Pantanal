@@ -25,6 +25,21 @@
        Always on — WordPress mangles & in shortcode attributes, so the embed
        URL must work with the single ?fig param (no &fill). */
     document.body.classList.add("fill");
+
+    /* scale mode: render the full 1060px two-column design and shrink it
+       to the frame, like a static figure scaled to the article column */
+    document.body.classList.add("scaled");
+    const sec = document.getElementById("figure-" + solo);
+    const soloWrap = sec.querySelector(".wrap");
+    const DESIGN_W = 1060;
+    const fitScale = () => {
+      const s = Math.min(1, document.documentElement.clientWidth / DESIGN_W);
+      soloWrap.style.transform = s < 1 ? `scale(${s})` : "";
+      sec.style.height = s < 1 ? soloWrap.offsetHeight * s + "px" : "";
+    };
+    new ResizeObserver(fitScale).observe(soloWrap);
+    window.addEventListener("resize", fitScale);
+    fitScale();
   }
 
   const fillParas = (el, paras) => {

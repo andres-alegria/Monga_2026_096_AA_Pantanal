@@ -71,19 +71,24 @@ body:not(.solo) section + section { border-top: 1px solid var(--hairline); }
    and spare pixels spread into the gaps between its blocks */
 body.solo.fill { min-height: 100vh; display: flex; flex-direction: column; }
 
-/* embeds live in Mongabay's <=780px column: keep them in the stacked
-   layout at every width, so the height formula has no layout jump */
-@media (max-width: 800px) {
-  body.solo.fill .two-col { grid-template-columns: 1fr; }
-  body.solo.fill .stat-grid { grid-template-columns: 1fr; }
-  body.solo.fill .stat-col { padding-right: 0; }
-  body.solo.fill .stat-col.right {
-    border-left: none;
-    border-top: 1px solid var(--ink-subtle);
-    padding: 16px 0 0;
-    margin-top: 16px;
-  }
+/* embed scale mode: the solo page renders its full 1060px two-column
+   design and is scaled to the frame width, like a static figure */
+body.scaled { overflow-x: hidden; }
+body.scaled.solo.fill section { flex: none; display: block; overflow: hidden; }
+body.scaled.solo.fill section .wrap {
+  display: block;
+  width: 1060px;
+  max-width: 1060px;
+  transform-origin: 0 0;
 }
+/* freeze the fluid type at its design (1060px) size so the scale is uniform */
+body.scaled h2 { font-size: 2.56rem; }
+body.scaled .fig-logo { width: 2.05rem; }
+body.scaled .section-body p { font-size: 1.55rem; }
+body.scaled .map-title { font-size: 1.14rem; }
+body.scaled .map-overlay { font-size: 0.98rem; }
+body.scaled .callout .box { width: 22ch; font-size: 1rem; }
+body.scaled .month-cell, body.scaled .season-label { font-size: 0.98rem; }
 body.solo.fill section { flex: 1; display: flex; }
 body.solo.fill section .wrap { flex: 1; display: flex; flex-direction: column; width: 100%; }
 body.solo.fill .card { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -473,18 +478,19 @@ body.pdf .callout .box { width: min(22ch, 260px); }
 /* ---------------- responsive ---------------- */
 
 @media (max-width: 760px) {
-  .two-col { grid-template-columns: 1fr; }
-  .stat-grid { grid-template-columns: 1fr; }
-  .stat-col { padding-right: 0; }
-  .stat-col.right {
+  /* none of this applies in scaled embeds, which keep the 1060px design */
+  body:not(.scaled) .two-col { grid-template-columns: 1fr; }
+  body:not(.scaled) .stat-grid { grid-template-columns: 1fr; }
+  body:not(.scaled) .stat-col { padding-right: 0; }
+  body:not(.scaled) .stat-col.right {
     border-left: none;
     border-top: 1px solid var(--ink-subtle);
     padding: 16px 0 0;
     margin-top: 16px;
   }
   /* GBIF maps stay three-across so the comparison reads at a glance */
-  .gbif-grid { gap: 8px; }
-  .pill-row { flex-direction: column; gap: 6px; }
-  .pill { font-size: 0.72rem; padding: 8px 6px; }
-  .pill-light { flex: none; }
+  body:not(.scaled) .gbif-grid { gap: 8px; }
+  body:not(.scaled) .pill-row { flex-direction: column; gap: 6px; }
+  body:not(.scaled) .pill { font-size: 0.72rem; padding: 8px 6px; }
+  body:not(.scaled) .pill-light { flex: none; }
 }
