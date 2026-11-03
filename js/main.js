@@ -45,7 +45,6 @@
 
   $("listenHeading").textContent = CONTENT.fig3.heading;
   fillParas($("listenBody"), CONTENT.fig3.body);
-  $("gbifTitle").textContent = CONTENT.fig3.gbifTitle;
   $("gbifCaption").textContent = CONTENT.fig3.gbifCaption;
 
   ["fig1", "fig2", "fig3"].forEach((k) => {
@@ -158,7 +157,7 @@
       `<span class="dot" style="left:${c.x}%;top:${c.y}%"></span>
        <span class="line" style="left:${c.x}%;top:${c.y}%;width:${len * 0.8}%;
              transform:rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)"></span>
-       <div class="box" style="left:${c.boxX}%;top:${c.boxY}%"><b>${c.lead}.</b> ${c.text}</div>`;
+       <div class="box" style="left:${c.boxX}%;top:${c.boxY}%">${c.lead ? `<b>${c.lead}.</b> ` : ""}${c.text}</div>`;
     el.style.position = "absolute";
     el.style.inset = "0";
     $("pulseFrame").appendChild(el);
