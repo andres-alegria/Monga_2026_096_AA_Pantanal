@@ -47,7 +47,10 @@
       const s = Math.min(sW, sH);
       soloWrap.style.transform = s < 1 ? `scale(${s})` : "";
       soloWrap.style.marginLeft = s < sW ? (cw - DESIGN_W * s) / 2 + "px" : "";
-      sec.style.height = s < 1 ? soloWrap.offsetHeight * s + "px" : "";
+      /* size the section from the RENDERED box — ground truth under any
+         transform/metric quirk */
+      sec.style.height = s < 1
+        ? soloWrap.getBoundingClientRect().height + "px" : "";
       if (params.get("debug") === "1") {
         let dbg = document.getElementById("fitDebug");
         if (!dbg) {
@@ -61,6 +64,9 @@
     };
     new ResizeObserver(fitScale).observe(soloWrap);
     window.addEventListener("resize", fitScale);
+    /* late image/font loads can slip past a throttled ResizeObserver
+       (seen on phones): a slow poll catches anything it missed */
+    setInterval(fitScale, 500);
     fitScale();
   }
 

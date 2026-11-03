@@ -80,7 +80,9 @@ body.solo.fill { min-height: 100vh; display: flex; flex-direction: column; }
 /* embed scale mode: the solo page renders its full 1060px two-column
    design and is scaled to the frame width, like a static figure */
 body.scaled { overflow-x: hidden; }
-body.scaled.solo.fill section { flex: none; display: block; overflow: hidden; }
+/* no section padding in embeds: a fixed (unscaled) offset above the wrap
+   would push the figure's bottom past the aspect-ratio-sized frame */
+body.scaled.solo.fill section { flex: none; display: block; padding: 0 !important; }
 body.scaled.solo.fill section .wrap {
   display: block;
   width: 1060px;
