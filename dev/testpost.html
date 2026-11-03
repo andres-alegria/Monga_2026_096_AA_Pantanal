@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>embed test post</title>
+<style>
+  html { box-sizing: border-box; }
+  *, *:before, *:after { box-sizing: inherit; }
+  body { margin: 0; font: 16px/1.5 -apple-system, sans-serif; }
+  /* pin the column to iPhone width regardless of window size */
+  .inner { width: 351px; margin: 0 auto; }
+  p { margin: 24px 0; }
+</style>
+</head>
+<body>
+<div class="inner">
+  <p>Test Fig 2 — phone-width column.</p>
+  <iframe id="emb" src="/?fig=2&debug=1" title="Pantanal figure 2" scrolling="no"
+    style="display:block; width:100%; height:auto; aspect-ratio:1060/891; border:0; outline:1px solid red;"></iframe>
+  <p>Paragraph right after the embed.</p>
+</div>
+<script>
+/* same-origin: measure the embed and report via a (404ing but logged)
+   GET to the dev server, so the numbers can be read from server logs */
+const emb = document.getElementById("emb");
+function report(tag) {
+  try {
+    const d = emb.contentDocument;
+    const w = emb.contentWindow;
+    const sec = d && d.querySelector("section:not([style*='none'])");
+    const wrap = sec && sec.querySelector(".wrap");
+    const data = {
+      tag,
+      frameW: Math.round(emb.getBoundingClientRect().width),
+      frameH: Math.round(emb.getBoundingClientRect().height),
+      innerDocH: d ? d.documentElement.scrollHeight : -1,
+      innerWinH: w ? w.innerHeight : -1,
+      innerCW: d ? d.documentElement.clientWidth : -1,
+      wrapH: wrap ? wrap.offsetHeight : -1,
+      secH: sec ? Math.round(sec.getBoundingClientRect().height) : -1,
+      transform: wrap ? wrap.style.transform : "",
+      ua: navigator.userAgent.slice(-40)
+    };
+    fetch("/DBGREPORT_" + tag + "_" + encodeURIComponent(JSON.stringify(data)));
+  } catch (e) {
+    fetch("/DBGREPORT_err_" + encodeURIComponent(String(e)));
+  }
+}
+emb.addEventListener("load", () => {
+  setTimeout(() => report("t1s"), 1000);
+  setTimeout(() => report("t4s"), 4000);
+});
+</script>
+</body>
+</html>

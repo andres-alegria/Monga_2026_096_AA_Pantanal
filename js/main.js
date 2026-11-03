@@ -33,18 +33,31 @@
     const soloWrap = sec.querySelector(".wrap");
     const DESIGN_W = 1060;
     const fitScale = () => {
-      const cw = document.documentElement.clientWidth;
+      /* element-based metrics: iOS reports window/innerWidth-style values
+         from the DEVICE viewport inside iframes, not the frame — body and
+         html layout sizes are what the frame actually is */
+      const cw = document.body.clientWidth;
       const sW = Math.min(1, cw / DESIGN_W);
       /* never exceed the frame: if anything (e.g. a browser's font
          inflation) makes the wrap taller than measured, shrink to fit
          the frame height rather than letting the bottom clip */
-      const ch = window.innerHeight;
+      const ch = document.documentElement.clientHeight;
       const sH = ch > 0 && soloWrap.offsetHeight > 0
         ? ch / soloWrap.offsetHeight : sW;
       const s = Math.min(sW, sH);
       soloWrap.style.transform = s < 1 ? `scale(${s})` : "";
       soloWrap.style.marginLeft = s < sW ? (cw - DESIGN_W * s) / 2 + "px" : "";
       sec.style.height = s < 1 ? soloWrap.offsetHeight * s + "px" : "";
+      if (params.get("debug") === "1") {
+        let dbg = document.getElementById("fitDebug");
+        if (!dbg) {
+          dbg = document.createElement("div");
+          dbg.id = "fitDebug";
+          dbg.style.cssText = "position:fixed;left:0;top:0;z-index:99;background:#000;color:#0f0;font:10px monospace;padding:2px 4px;";
+          document.body.appendChild(dbg);
+        }
+        dbg.textContent = `cw${cw} ih${window.innerHeight} wh${soloWrap.offsetHeight} sW${sW.toFixed(3)} sH${sH.toFixed(3)} doc${document.documentElement.scrollHeight}`;
+      }
     };
     new ResizeObserver(fitScale).observe(soloWrap);
     window.addEventListener("resize", fitScale);
