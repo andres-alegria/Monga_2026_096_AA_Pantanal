@@ -13,7 +13,7 @@ const CONTENT = {
   fig1: {
     heading: "Dry and wet season dynamics in the Pantanal",
     body: [
-      "Rain over the headwaters peaks in January, but the wetland is so flat, and so dammed back by rock bottlenecks on the Paraguay River, that the flood crest reaches the south months later, deep into the dry season."
+      "Rains peak in January and create initial flooding. Due to bottlenecks in the Paraguay River, the flood doesn't extend further south until months later, deep into the dry season."
     ],
     globeCaption: "The Pantanal lies at the heart of South America, where Brazil, Bolivia and Paraguay meet",
     mapTitle: "Average share of each month spent under water",
@@ -40,7 +40,7 @@ const CONTENT = {
         x: 36, y: 66,
         boxX: 55, boxY: 58,
         lead: "",
-        text: "The wetland is so flat that the flood takes months to reach south, arriving around mid-year's dry season."
+        text: "The wetland is so flat that the flood takes months to reach further south, arriving around the mid-year dry season."
       }
     ],
     stats: [
