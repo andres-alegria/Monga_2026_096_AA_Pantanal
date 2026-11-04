@@ -205,7 +205,7 @@
       `<span class="dot" style="left:${c.x}%;top:${c.y}%"></span>
        <span class="line" style="left:${c.x}%;top:${c.y}%;width:${len * 0.8}%;
              transform:rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)"></span>
-       <div class="box" style="left:${c.boxX}%;top:${c.boxY}%">${c.lead ? `<b>${c.lead}.</b> ` : ""}${c.text}</div>`;
+       <div class="box" style="left:${c.boxX}%;top:${c.boxY}%">${c.lead ? `<b>${c.lead}:</b> ` : ""}${c.text}</div>`;
     el.style.position = "absolute";
     el.style.inset = "0";
     $("pulseFrame").appendChild(el);

@@ -15,16 +15,16 @@ const CONTENT = {
     body: [
       "Rains peak in January and create initial flooding. Due to bottlenecks in the Paraguay River, the flood doesn't extend further south until months later, deep into the dry season."
     ],
-    globeCaption: "The Pantanal lies at the heart of South America, where Brazil, Bolivia and Paraguay meet",
-    mapTitle: "Average share of each month spent under water",
+    globeCaption: "The Pantanal lies at the heart of South America, where Brazil, Bolivia and Paraguay meet.",
+    mapTitle: "Average share of each month spent underwater",
     mapTitlePeriod: "Period 1999–2019",
     /* white annotation over the map's top-left corner */
-    mapOverlay: "Blue–white shading marks areas covered by water in a given month",
+    mapOverlay: "Blue–white shading marks areas covered by water in a given month.",
     playLabel: "Play the year",
     pauseLabel: "Pause",
     // wet season band on the month dial (hydrological: Oct–May rains)
     wetMonths: [9, 10, 11, 0, 1, 2, 3, 4], // Oct..May as 0-indexed months
-    wetSeasonLabel: "rainy season (Oct–May)",
+    wetSeasonLabel: "Rainy season (Oct–May)",
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     // callouts appear only during the listed months (0-indexed)
     callouts: [
@@ -45,21 +45,21 @@ const CONTENT = {
     ],
     stats: [
       { value: "39%", label: "of the wetland never flooded between 2000 and 2020" },
-      { value: "3.4%", label: "is permanently under water" },
+      { value: "3.4%", label: "is permanently underwater" },
       { value: "~60%", label: "of the year-to-year variation in flooding is explained by rainfall alone" }
     ],
     cycleNote: {
       lead: "Part of a longer cycle:",
-      text: "A century of river-level records show alternating wet and dry phases: the driest span ran 1963–73, and the 2020 drought."
+      text: "A century of river-level records show alternating wet and dry phases: The driest span ran 1963–73 and the 2020 drought."
     },
     sources: "Sources: J.L.M. Moreira Sugai (UFMS); Pereira et al. (2022); Stevaux et al. (2020); Bergier & Assine (2016); Damasceno-Junior & Pott (2021)."
   },
 
   /* ---------- Figure 2 — In 2020 the water stayed away, and fire moved in ---------- */
   fig2: {
-    heading: "In 2020 the water stayed away, and fire moved in",
+    heading: "In 2020, the water stayed away, and fire moved in",
     body: [
-      "Less rain means a lesser flood — and more wildfire. In 2020, floods shrank by 83% below the 2000–2020 average while fire spread deep into areas that normally sit underwater."
+      "Less rain meant a lesser flood — and more wildfire. In 2020, floods shrank by 83% below the 2000–2020 average while fire spread deep into areas that normally sit underwater."
     ],
     mapTitle: "Fire detections through 2020",
     legend: [
